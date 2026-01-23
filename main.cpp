@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include "matcher.cpp"
 using namespace std;
 
 
@@ -57,6 +58,6 @@ int main() {
         cout << endl;
     }
 
-
-return 0;
+    matcher(hospitals, students, n);
+    return 0;
 }

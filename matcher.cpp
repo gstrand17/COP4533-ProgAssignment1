@@ -5,6 +5,33 @@
 #include <set>
 using namespace std;
 
+bool prefers(int a, int h, map<int, vector<int>> students,  vector<pair<int, int>> matching){
+    int currMatch = 0;
+    int matchInd = -1;
+    int n = students.size();
+    // find the current hospital for that student
+    for (int i = 0; i<matching.size(); i++){
+        if (a == matching[i].second){
+            currMatch = matching[i].first; //hospital that student 'a' is paired to in the matching list
+        }
+    }
+    // what number preference is this matched hospital
+    for (int i = 0; i<n; i++){
+        if (students[a][i]==currMatch){
+            matchInd = i;
+        }
+    }
+    // compare with student preference list
+    int i = 0;
+    while (i<matchInd){
+        if (students[a][i] == h){
+            return true;
+        }
+        i++;
+    }
+    return false;
+}
+
 void matcher(map<int, vector<int>> hospitals, map<int, vector<int>> students, int n){
     vector<pair<int, int>> matching;
     set<int> available;
@@ -16,21 +43,38 @@ void matcher(map<int, vector<int>> hospitals, map<int, vector<int>> students, in
     }
 
     while (!pending.empty()){
-        int num = pending.front();
+        int currHosp = pending.front();
         for (int i = 0; i<n; i++){
-            if (available.count(hospitals[num][i])==0){
+            if (available.count(hospitals[currHosp][i])==0){
                 // student is free
-                matching.push_back({num, i}); // match made
-                pending.pop(); // hospital doesn't need a student any longer
-                available.erase(i); // student is no longer available
+                matching.push_back({currHosp, i}); // match made!!
+                pending.pop(); // take hospital out the queue
+                available.erase(i); // student is taken
+                break; // no more students to loop through, hospital is satisfied
             }
-            else if(){
-
+            else if(prefers(hospitals[currHosp][i], currHosp, students, matching)){
+                for (int j=0; j<matching.size(); j++){
+                    if (matching[j].second == hospitals[currHosp][i]){ // find old hospital pairing
+                        pending.push(matching[j].first); // put it back in the queue, needs a student again
+                        matching[j].first = currHosp; // update the match with the new hospital
+                        pending.pop(); // take the new hospital out the queue
+                        break;
+                    }
+                }
+                break; // no more students to loop through
+            }
+            else{
+                continue; // a rejects h
             }
         }
-
-
-
     }
+    // write to output file
+    ofstream outFile;
+    outFile.open("./example_out.txt");
+    for (int i = 0; i<n; i++){
+        // write pairing to example_out.txt
+        outFile << matching[n].first << " "<< matching[n].second << "\n";
+    }
+    outFile.close();
 }
 

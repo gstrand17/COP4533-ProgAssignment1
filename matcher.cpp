@@ -1,8 +1,10 @@
+#include <algorithm>
 #include <iostream>
 #include <map>
 #include <queue>
 #include <vector>
 #include <set>
+#include <algorithm>
 using namespace std;
 
 bool prefers(int a, int h, map<int, vector<int>> students,  vector<pair<int, int>> matching){
@@ -44,12 +46,15 @@ void matcher(map<int, vector<int>> hospitals, map<int, vector<int>> students, in
 
     while (!pending.empty()){
         int currHosp = pending.front();
-        for (int i = 0; i<n; i++){
-            if (available.count(hospitals[currHosp][i])==0){
-                // student is free
-                matching.push_back({currHosp, i}); // match made!!
+        for (int i = 0; i<n; i++) { //loops through preference list
+            if (available.count(hospitals[currHosp][i])!=0){
+                // student is free (in the available list)
+                matching.push_back({currHosp, hospitals[currHosp][i]}); // match made!!
                 pending.pop(); // take hospital out the queue
-                available.erase(i); // student is taken
+                available.erase(hospitals[currHosp][i]); // student is taken
+                for (int k : available) {
+                    cout << k << " ";
+                }
                 break; // no more students to loop through, hospital is satisfied
             }
             else if(prefers(hospitals[currHosp][i], currHosp, students, matching)){
@@ -68,13 +73,21 @@ void matcher(map<int, vector<int>> hospitals, map<int, vector<int>> students, in
             }
         }
     }
+    sort(matching.begin(), matching.end());
     // write to output file
-    ofstream outFile;
-    outFile.open("./example_out.txt");
-    for (int i = 0; i<n; i++){
-        // write pairing to example_out.txt
-        outFile << matching[n].first << " "<< matching[n].second << "\n";
+    ofstream outFile("../example_out.txt");
+    if (!outFile.is_open())
+    {
+        cout << "Error in creating file!" << endl;
+
     }
-    outFile.close();
+    else {
+        cout << "File created successfully." << endl;
+        for (int i = 0; i<n; i++){
+            // write pairing to example_out.txt
+            outFile << matching[i].first << " "<< matching[i].second << "\n";
+        }
+        outFile.close();
+    }
 }
 

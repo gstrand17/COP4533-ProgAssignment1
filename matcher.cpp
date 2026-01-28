@@ -34,7 +34,7 @@ bool prefers(int a, int h, map<int, vector<int>> students,  vector<pair<int, int
     return false;
 }
 
-void matcher(map<int, vector<int>> hospitals, map<int, vector<int>> students, int n){
+vector<pair<int,int>> matcher(map<int, vector<int>> hospitals, map<int, vector<int>> students, int n){
     vector<pair<int, int>> matching;
     set<int> available;
     queue<int> pending;
@@ -52,9 +52,6 @@ void matcher(map<int, vector<int>> hospitals, map<int, vector<int>> students, in
                 matching.push_back({currHosp, hospitals[currHosp][i]}); // match made!!
                 pending.pop(); // take hospital out the queue
                 available.erase(hospitals[currHosp][i]); // student is taken
-                for (int k : available) {
-                    cout << k << " ";
-                }
                 break; // no more students to loop through, hospital is satisfied
             }
             else if(prefers(hospitals[currHosp][i], currHosp, students, matching)){
@@ -82,12 +79,12 @@ void matcher(map<int, vector<int>> hospitals, map<int, vector<int>> students, in
 
     }
     else {
-        cout << "File created successfully." << endl;
         for (int i = 0; i<n; i++){
             // write pairing to example_out.txt
             outFile << matching[i].first << " "<< matching[i].second << "\n";
         }
         outFile.close();
     }
+    return matching;
 }
 

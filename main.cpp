@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include "matcher.cpp"
+#include "checker.cpp"
 using namespace std;
 
 
@@ -57,7 +58,8 @@ int main() {
         }
         cout << endl;
     }
-
-    matcher(hospitals, students, n);
+    vector<pair<int,int>> matched;
+    matched = matcher(hospitals, students, n);
+    verify(matched, hospitals, students, n);
     return 0;
 }

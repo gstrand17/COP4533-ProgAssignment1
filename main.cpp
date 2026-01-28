@@ -60,6 +60,12 @@ int main() {
     }
     vector<pair<int,int>> matched;
     matched = matcher(hospitals, students, n);
-    verify(matched, hospitals, students, n);
+    bool stable = verify(matched, hospitals, students, n);
+    if (stable == 1) { // bool 1 = true
+        cout << "true & stable"<< endl;
+    }
+    else { //bool 0 = false
+        cout << "false & unstable" << endl;
+    }
     return 0;
 }

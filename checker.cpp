@@ -7,6 +7,18 @@
 #include <algorithm>
 using namespace std;
 
+int findPref(int target, int match, map<int, vector<int>> prefMap, int n){
+    // target could be a student or hospital number
+    // match could either be the hospital paired to the target student, or the student paired to the target hospital
+    // if target is a student, prefMap is students map. if target is hospitals, prefMap is hospitals map
+    for (int i=0; i<n; i++){
+        if(prefMap[target][i] == match){ //locates exactly the index that the match is at in the preference list
+            return i+1; // returns preference i.e. 1st, 2nd, 3rd, 4th, 5th (excludes 0th)
+        }
+    }
+    return -1;
+}
+
 bool verify(vector<pair<int,int>> matching, map<int, vector<int>> hospitals, map<int, vector<int>> students, int n) {
     set<int> sCheck;
     set<int> hCheck;

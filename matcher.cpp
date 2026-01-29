@@ -4,7 +4,7 @@
 #include <queue>
 #include <vector>
 #include <set>
-#include <algorithm>
+
 using namespace std;
 
 bool prefers(int a, int h, map<int, vector<int>> students,  vector<pair<int, int>> matching){
@@ -72,7 +72,9 @@ vector<pair<int,int>> matcher(map<int, vector<int>> hospitals, map<int, vector<i
     }
     sort(matching.begin(), matching.end());
     // write to output file
-    ofstream outFile("../example_out.txt");
+    string fileName = "";
+    fileName = "../outputs/example" + to_string(n) + "out.txt";
+    ofstream outFile(fileName);
     if (!outFile.is_open())
     {
         cout << "Error in creating file!" << endl;

@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <chrono>
 #include "matcher.cpp"
 #include "checker.cpp"
 #include "generator.cpp"
@@ -11,7 +12,9 @@ using namespace std;
 
 
 int main() {
-    vector<int> nArray{2, 256};
+    vector<pair<int, float>> matcherTime;
+    vector<pair<int,float>> checkerTime;
+    vector<int> nArray{2,4, 8, 16, 32, 64, 128, 256, 512};
     vector<string> fileList = generator(nArray);
     for (string file : fileList){
         ifstream inFile (file);
@@ -63,14 +66,28 @@ int main() {
             cout << endl;
         }
         vector<pair<int,int>> matched;
-        matched = matcher(hospitals, students, n);
-        bool stable = verify(matched, hospitals, students, n);
+        matched = matcher(hospitals, students, n, matcherTime);
+        bool stable = verify(matched, hospitals, students, n, checkerTime);
         if (stable == 1) { // bool 1 = true
             cout << "true & stable"<< endl;
         }
         else { //bool 0 = false
             cout << "false & unstable" << endl;
         }
+
     }
+    ofstream matchFile ("../matchingTime.csv");
+
+    for (auto time : matcherTime) {
+        cout << time.first << " " << time.second << endl;
+        matchFile << time.first << "," << time.second << endl;
+    }
+    matchFile.close();
+    ofstream checkFile ("../checkTime.csv");
+    for (auto time: checkerTime) {
+        cout << time.first << " " << time.second << endl;
+        checkFile << time.first << "," << time.second << endl;
+    }
+    checkFile.close();
     return 0;
 }

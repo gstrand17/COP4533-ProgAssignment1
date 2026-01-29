@@ -4,6 +4,7 @@
 #include <queue>
 #include <vector>
 #include <set>
+#include <chrono>
 
 using namespace std;
 
@@ -34,7 +35,8 @@ bool prefers(int a, int h, map<int, vector<int>> students,  vector<pair<int, int
     return false;
 }
 
-vector<pair<int,int>> matcher(map<int, vector<int>> hospitals, map<int, vector<int>> students, int n){
+vector<pair<int,int>> matcher(map<int, vector<int>> hospitals, map<int, vector<int>> students, int n, vector<pair<int, float>>& matcherTime){
+    auto start = chrono::high_resolution_clock::now();
     vector<pair<int, int>> matching;
     set<int> available;
     queue<int> pending;
@@ -87,6 +89,11 @@ vector<pair<int,int>> matcher(map<int, vector<int>> hospitals, map<int, vector<i
         }
         outFile.close();
     }
+    auto stop = chrono::high_resolution_clock::now();
+    // using default to get seconds
+    chrono::duration<float> duration = stop - start;
+    float elapsedTime = duration.count();
+    matcherTime.push_back({n, elapsedTime});
     return matching;
 }
 

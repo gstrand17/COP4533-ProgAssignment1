@@ -5,6 +5,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <chrono>
 using namespace std;
 
 int findPref(int target, int match, map<int, vector<int>> prefMap, int n){
@@ -55,7 +56,8 @@ bool HappyS (int currStud, int choice, map<int,vector<int>> hospitals, map<int,v
     return true;
 }
 
-bool verify(vector<pair<int,int>> matching, map<int, vector<int>> hospitals, map<int, vector<int>> students, int n) {
+bool verify(vector<pair<int,int>> matching, map<int, vector<int>> hospitals, map<int, vector<int>> students, int n, vector<pair<int, float>>& checkerTime) {
+    auto start = chrono::high_resolution_clock::now();
     set<int> sCheck;
     set<int> hCheck;
     // verifies we see no duplicates in hospital or student matches
@@ -70,6 +72,10 @@ bool verify(vector<pair<int,int>> matching, map<int, vector<int>> hospitals, map
         if (hCheck.count(i.first) == 0) {
             hCheck.insert(i.first);
         } else {
+            auto stop = chrono::high_resolution_clock::now();
+            // using default to get seconds
+            chrono::duration<float> duration = stop - start;
+            float elapsedTime = duration.count();
             return false;
         }
     }
@@ -85,10 +91,19 @@ bool verify(vector<pair<int,int>> matching, map<int, vector<int>> hospitals, map
         else {
             if (!HappyH(currHosp, HospChoice, hospitals, students, matching,n) || !HappyS(currStud, StudChoice, hospitals, students, matching, n)) {
                 cout << currHosp << " or " << currStud << " is unstable" << endl;
+                auto stop = chrono::high_resolution_clock::now();
+                // using default to get seconds
+                chrono::duration<float> duration = stop - start;
+                float elapsedTime = duration.count();
                 return false;
             }
         }
     }
+    auto stop = chrono::high_resolution_clock::now();
+    // using default to get seconds
+    chrono::duration<float> duration = stop - start;
+    float elapsedTime = duration.count();
+    checkerTime.push_back({n, elapsedTime});
     return true;
 
 }

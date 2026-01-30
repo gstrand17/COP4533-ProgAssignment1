@@ -3,7 +3,7 @@ Name: Alanis Castillo UFID: 18144408
 
 Name: Graciela Strand UFID: 80178234
 
-# H1  Instructions to run code
+#  Instructions to run code
   1. Downlad github repo either by cloning or forking
   2. Reload Cmake project
   3. Compile and run main.cpp

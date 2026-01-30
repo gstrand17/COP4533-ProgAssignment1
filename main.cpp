@@ -14,7 +14,7 @@ using namespace std;
 int main() {
     vector<pair<int, float>> matcherTime;
     vector<pair<int,float>> checkerTime;
-    vector<int> nArray{2,4, 8, 16, 32, 64, 128, 256, 512};
+    vector<int> nArray{2,4, 8, 16, 32, 64, 128, 256, 384, 512};
     vector<string> fileList = generator(nArray);
     for (string file : fileList){
         ifstream inFile (file);
@@ -24,9 +24,7 @@ int main() {
         }
         string str_n; // parse n
         getline(inFile, str_n);
-        cout << "string n is " << str_n << endl;
         int n = stoi(str_n); //convert to int
-        cout << "int n = " << n << endl;
         map<int, vector<int>> hospitals;
         map<int, vector<int>> students;
 
@@ -51,41 +49,23 @@ int main() {
             }
             students[i] = temp;
         }
-        for (auto n: hospitals) {
-            cout << "Hosptial: "<< n.first << " list: "; ;
-            for (int i = 0; i < n.second.size(); i++) {
-                cout << n.second[i] << " ";
-            }
-            cout << endl;
-        }
-        for (auto n: students) {
-            cout << "Student: "<< n.first << " list: "; ;
-            for (int i = 0; i < n.second.size(); i++) {
-                cout << n.second[i] << " ";
-            }
-            cout << endl;
-        }
         vector<pair<int,int>> matched;
         matched = matcher(hospitals, students, n, matcherTime);
         bool stable = verify(matched, hospitals, students, n, checkerTime);
-        if (stable == 1) { // bool 1 = true
-            cout << "true & stable"<< endl;
-        }
-        else { //bool 0 = false
-            cout << "false & unstable" << endl;
-        }
+
 
     }
     ofstream matchFile ("../matchingTime.csv");
-
+    cout << "Run times for matcher" << endl;
     for (auto time : matcherTime) {
-        cout << time.first << " " << time.second << endl;
+        cout << "N= " << time.first << " Time = " << time.second << " seconds" << endl;
         matchFile << time.first << "," << time.second << endl;
     }
     matchFile.close();
     ofstream checkFile ("../checkTime.csv");
+    cout << "Run times for checker" << endl;
     for (auto time: checkerTime) {
-        cout << time.first << " " << time.second << endl;
+        cout << "N= " << time.first << " Time = " << time.second << " seconds" << endl;
         checkFile << time.first << "," << time.second << endl;
     }
     checkFile.close();

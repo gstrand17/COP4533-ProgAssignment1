@@ -76,9 +76,11 @@ bool verify(vector<pair<int,int>> matching, map<int, vector<int>> hospitals, map
             // using default to get seconds
             chrono::duration<float> duration = stop - start;
             float elapsedTime = duration.count();
+            cout << "INVALID because not perfect matches" << endl;
             return false;
         }
     }
+    cout << "VALID ";
     for (int i = 0 ; i < matching.size(); i++) {
         int currHosp = matching[i].first;
         int currStud = matching[i].second;
@@ -95,6 +97,7 @@ bool verify(vector<pair<int,int>> matching, map<int, vector<int>> hospitals, map
                 // using default to get seconds
                 chrono::duration<float> duration = stop - start;
                 float elapsedTime = duration.count();
+                cout << "UNSTABLE because there existing a blocking pair of " << currHosp << " and " << currStud << " existing" << endl;
                 return false;
             }
         }
@@ -104,6 +107,7 @@ bool verify(vector<pair<int,int>> matching, map<int, vector<int>> hospitals, map
     chrono::duration<float> duration = stop - start;
     float elapsedTime = duration.count();
     checkerTime.push_back({n, elapsedTime});
+    cout << "STABLE" << endl;
     return true;
 
 }

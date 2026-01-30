@@ -21,6 +21,9 @@ vector<string> generator(vector<int> nArray){ // where nArray = [1,2,4, 8, 16, 3
     // generate one file per n
     for (int i = 0; i<nArray.size(); i++){
         int n = nArray[i];
+        if (n<1){ // does not generate a test file for an invalid n
+            continue;
+        }
         fileName = "../inputs/example" + to_string(n) + "in.txt"; // for n = 512, file name is example512in.txt
         ofstream outFile(fileName);
         if (!outFile.is_open()){

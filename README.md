@@ -1,5 +1,6 @@
-# H1 Students
+# Students
 Name: Alanis Castillo UFID: 18144408
+
 Name: Graciela Strand UFID: 80178234
 
 # H1  Instructions to run code
@@ -9,11 +10,11 @@ Name: Graciela Strand UFID: 80178234
   4. *Running main.cpp runs the matcher and verifier functions
   5.  Compile plot.py
      
-# H1 Assumptions
+# Assumptions
 - file input is a .txt file with space delimiters with new line between each list, the file also starts with n as the first value
 - output is .txt file
 
-# H1 Graph and solutions to part C
+# Graph and solutions to part C
 <img width="758" height="585" alt="verifer time N" src="https://github.com/user-attachments/assets/0daf5faa-59c2-4647-8160-523ce54821b9" />
 <img width="787" height="597" alt="matching Time N" src="https://github.com/user-attachments/assets/51ce2797-bc94-4b57-a9db-d49eda4e7e02" />
 

@@ -14,7 +14,7 @@ using namespace std;
 int main() {
     vector<pair<int, float>> matcherTime;
     vector<pair<int,float>> checkerTime;
-    vector<int> nArray{2,4, 8, 16, 32, 64, 128, 256, 384, 512};
+    vector<int> nArray{1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
     vector<string> fileList = generator(nArray);
     for (string file : fileList){
         ifstream inFile (file);
